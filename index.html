@@ -5,7 +5,7 @@
 		<title></title>
 	</head>
 	<script>
-		//定位
+		//定位 可以设为在页面加载完成后调用
 		function getLocation() {
 		  if (navigator.geolocation){
 		    navigator.geolocation.getCurrentPosition(showPosition);
@@ -31,8 +31,32 @@
 			var data = event.dataTransfer.getData("Text");	//从transfer中取得被拖拽的元素Id
 			event.target.appendChild(document.getElementById(data));
 		}
-		</script>
 		
+		//canvas绘图
+		function drawPicture(){
+			var canva = document.getElementById("canvas1");
+			var ctx = canva.getContext("2d");
+			ctx.fillStyle="pink";
+			ctx.strokeStyle="blue";
+			ctx.strokeWidth=100;
+			
+			ctx.moveTo(5,10);
+			ctx.lineTo(10,60);
+			ctx.lineTo(60,85);
+			ctx.lineTo(95,63);
+			ctx.arc(95,63,60,0,180,true);
+			ctx.lineTo(5,10);
+			
+			//ctx.fill();
+			ctx.stroke();
+			
+			ctx.font="30px Arial";
+			ctx.strokeStyle = "brown";
+			ctx.strokeText("Hello",10,50,200);
+		}
+		
+		
+	</script>
 		
 	<style>
 		body {
@@ -42,9 +66,51 @@
 			font-style: italic;
 		}
 	</style>
-	<body onload="return false;getLocation()">
+	<body onload="drawPicture()">
+		<hr/>
+		<pre>
+		新增表单属性：
+		autocomplete : 是否打开表单或输入框的自动完成功能
+		noavalidate : 设置form表单提交时不校验
+		autofocus : 设置&lt;input&gt;标签自动聚焦  autofocus="true"
+		formaction : 在type=submit/image上使用，会覆盖form中的action属性
+		formenctype : 在type=submit上使用，会覆盖form中的enctype属性 表单编码类型，如multipart/form-data
+		formmethod : 在type=submit上使用，会覆盖form中的method属性
+		formnovalidate，formtarget 同上类似
+		multiple : 用在type=file上，表示可同时选取多个文件
+		pattern : 用在type=输入框上，提交时校验文本框内容是否匹配正则表达式
+		placeholder : 默认提示信息
+		required : 表示此文本域为必填信息
+		step : 步长，规定数字的间距，可配合type=number,min,max使用。以最小的自然数为基准
+		</pre>
+		<form>
+		<input type="number" step="3"  max="99"/>
+		<input type="submit"/>
+		</form>
+		<hr/>
+		表单元素（自动完成）：
+		datalist:
+		<div>
+			<input list="browsers">
+
+			<datalist id="browsers">
+			  <option value="Internet Explorer">
+			  <option value="Firefox">
+			  <option value="Chrome">
+			  <option value="Opera">
+			  <option value="Safari">
+			</datalist>	
+		</div>
+		
 		<hr/>
 		<p class="title">图形图像</p>
+		CANVAS:
+		<div>
+			<canvas id="canvas1" width="200" height="100">
+				
+			</canvas>
+		</div>
+		SVG:
 		<div>
 			<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="190">
 			  <polygon points="100,10 40,180 190,60 10,60 160,180"
