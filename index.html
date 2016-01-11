@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<script>
+		//定位
+		function getLocation() {
+		  if (navigator.geolocation){
+		    navigator.geolocation.getCurrentPosition(showPosition);
+		  }else{
+		  	x.innerHTML="该浏览器不支持获取地理位置。";
+		  }
+		 }
+		function showPosition(position) {
+			var latitude = position.coords.latitude;
+			var longitude = position.coords.longitude;
+			alert("纬度："+latitude+" 经度："+longitude);
+		 }
+		
+		//拖拽元素
+		function startDrag(event){
+			event.dataTransfer.setData("Text",event.target.id);	//将id放到transfer中 key要使用Text(兼容ie)
+		}
+		function dragOver(event){
+			event.preventDefault();	//阻止默认事件
+		}
+		function dropDown(event){
+			event.preventDefault();
+			var data = event.dataTransfer.getData("Text");	//从transfer中取得被拖拽的元素Id
+			event.target.appendChild(document.getElementById(data));
+		}
+		</script>
+		
+		
+	<style>
+		body {
+			font-family: "微软雅黑";
+		}
+		p.title {
+			font-style: italic;
+		}
+	</style>
+	<body onload="return false;getLocation()">
+		<hr/>
+		<p class="title">图形图像</p>
+		<div>
+			<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="190">
+			  <polygon points="100,10 40,180 190,60 10,60 160,180"
+			  style="fill: yellow;stroke:pink;stroke-width:5;fill-rule: nonzero;">
+			</svg>
+		</div>
+		
+		<hr/>
+		<p class="title">元素拖拽</p>
+		<p id="bedrag" draggable="true" ondragstart="startDrag(event)" style="background-color: lightcoral;">等待被拖动的元素</p>
+		<div id="container" ondrop="dropDown(event)" ondragover="dragOver(event)"  style="width:300px;height: 100px;background-color: #eaeaea;display: block;"></div>
+		<div id="container2" ondrop="dropDown(event)" ondragover="dragOver(event)"  style="width:300px;height: 100px;background-color: greenyellow;"></div>
+		
+		<hr/>
+		<p class="title">媒体元素</p>
+		<audio id="maudio" controls>
+		  <source src="media/horse.ogg" type="audio/ogg">
+		  <source src="media/horse.mp3" type="audio/mpeg">
+			您的浏览器不支持 audio 元素。
+		</audio>
+		<br/>
+		<video height="320px" width="300px" controls>
+			<source src="media/movie.mp4" type="video/mp4"></source>
+			您的浏览器不支持 video 元素
+		</video>
+		
+		<hr/>
+		<p class="title">input标签新增的type(有些浏览器不支持):</p>
+		<form>
+			颜色：<input type="color" name="favor_color"  placeholder="不支持该属性" /><br/>
+			月份：<input type="month" name="mmonth" placeholder="不支持该属性"/><br/>
+			月份：<input type="week" name="mweek" placeholder="不支持该属性"/><br/>
+			日期：<input type="date" name="mydate"  placeholder="不支持该属性" /><br/>
+			时间：<input type="datetime" name="mydatetime" placeholder="不支持该属性" /><br/>
+			范围：<input type="range" name="mrange"  placeholder="不支持该属性" min="10" max="80" /><br/>
+			邮箱：<input type="email" name="memail" /><br/>
+			数字：<input type="number" min="10" max="100" /><br/>
+			网址：<input type="url" name="murl" /><br/>
+	
+			<br/><br/><input type="submit" />
+		</form>
+	</body>
+</html>
