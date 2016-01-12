@@ -112,37 +112,7 @@
 	</script>
 
 	<body onload="inits()">
-		<hr/>
-		<pre>
-		<p class="title">web存储：以key-value的方式存在</p>
-		localStorage本地存储：永久有效
-		例：存入localStorage.firstName="hejinsheng";读取 localStorage.firstName
-		使用场景，可以作为某些数据的缓存，需要时从localStorage中取值
-		sessionStorage会话存储：只在当前浏览器会话有效，浏览器窗口关闭后删除
-		例：sessionStorage.lastName="zhuziqin"
 		
-		注：使用前判断浏览器是否支持
-		if(typeof(Storage)!=="undefined"){
-		  // Yes! localStorage and sessionStorage support!
-		  // Some code.....
-		 }
-		else{
-		  // Sorry! No web storage support..
-		 }
-		<pre>
-			
-		<hr/>
-		<p class="title">HTML5 Web SQL数据库</p>
-		
-		<hr/>
-		<p class="title">应用程序缓存</p>
-		HTML5 引入了应用程序缓存，这意味着 web 应用可进行缓存，并可在没有因特网连接时进行访问。
-		如需启用应用程序缓存，请在文档的<html> 标签中包含 manifest 属性：
-		&lt;!DOCTYPE HTML&gt;
-		&lt;html manifest="demo.appcache"&gt;
-		...
-		&lt;/html&gt;
-		注：一旦文件被缓存，则浏览器会继续展示已缓存的版本，即使您修改了服务器上的文件。为了确保浏览器更新缓存，需要更新 manifest 文件！。
 		<hr/>
 		<pre>
 		<p class="title">语义化元素：</p>
@@ -162,17 +132,7 @@
 		}
 		</pre>
 		
-		<hr/>
 		
-		<p class="title">HTML5 服务器发送事件(Server-Sent Events)</p>
-		HTML5 服务器发送事件（server-sent event）允许网页获得来自服务器的更新。（消息推送）
-		<div id="hdiv"></div>
-		<hr/>
-		<p class="title">Web work使用</p>
-		web worker 是运行在后台的 JavaScript，不会影响页面的性能。
-		调用后返回的内容：<br/>
-		<textarea id="workcontent" style="background-color: burlywood;width: 500px;height: 300px;"></textarea>
-		<input type="button" value="开始调用worker" onclick="startWork()" />
 		
 		<hr/>
 		<p class="title">新增的元素</p>
@@ -284,5 +244,49 @@
 	
 			<br/><br/><input type="submit" />
 		</form>
+		
+		<hr/>
+		<pre>
+		<p class="title">web存储：以key-value的方式存在</p>
+		localStorage本地存储：永久有效
+		例：存入localStorage.firstName="hejinsheng";读取 localStorage.firstName
+		使用场景，可以作为某些数据的缓存，需要时从localStorage中取值
+		sessionStorage会话存储：只在当前浏览器会话有效，浏览器窗口关闭后删除
+		例：sessionStorage.lastName="zhuziqin"
+		
+		注：使用前判断浏览器是否支持
+		if(typeof(Storage)!=="undefined"){
+		  // Yes! localStorage and sessionStorage support!
+		  // Some code.....
+		 }
+		else{
+		  // Sorry! No web storage support..
+		 }
+		<pre>
+			
+		<hr/>
+		<p class="title">HTML5 Web SQL数据库</p>
+		
+		<hr/>
+		<p class="title">应用程序缓存</p>
+		HTML5 引入了应用程序缓存，这意味着 web 应用可进行缓存，并可在没有因特网连接时进行访问。
+		如需启用应用程序缓存，请在文档的<html> 标签中包含 manifest 属性：
+		&lt;!DOCTYPE HTML&gt;
+		&lt;html manifest="demo.appcache"&gt;
+		...
+		&lt;/html&gt;
+		注：一旦文件被缓存，则浏览器会继续展示已缓存的版本，即使您修改了服务器上的文件。为了确保浏览器更新缓存，需要更新 manifest 文件！。
+		
+		<hr/>
+		<p class="title">HTML5 服务器发送事件(Server-Sent Events)</p>
+		HTML5 服务器发送事件（server-sent event）允许网页获得来自服务器的更新。（消息推送）
+		<div id="hdiv"></div>
+		
+		<hr/>
+		<p class="title">Web work使用</p>
+		web worker 是运行在后台的 JavaScript，不会影响页面的性能。
+		调用后返回的内容：<br/>
+		<textarea id="workcontent" style="background-color: burlywood;width: 500px;height: 300px;"></textarea>
+		<input type="button" value="开始调用worker" onclick="startWork()" />
 	</body>
 </html>
