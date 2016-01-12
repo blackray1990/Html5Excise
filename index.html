@@ -2,9 +2,31 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title></title>
+		<title>HTML新特性学习</title>
 	</head>
+	<link rel="stylesheet" href="css/main.css" />
 	<script>
+	
+		
+		var html;
+		function inits(){
+			html = document.body.innerHTML;
+			document.body.innerHTML = "";
+			
+			var progress = document.createElement("progress");
+			var w = document.documentElement.clientWidth;
+			var h = document.documentElement.clientHeight;
+
+			progress.style.marginLeft = (w-160)/2 + "px";
+			progress.style.marginTop = (h-18)/2 + "px";
+			document.body.appendChild(progress);
+		}
+		setTimeout(function(){
+			document.body.innerHTML = html;
+		},3000);
+		
+		
+		
 		//定位 可以设为在页面加载完成后调用
 		function getLocation() {
 		  if (navigator.geolocation){
@@ -54,22 +76,132 @@
 			ctx.strokeStyle = "brown";
 			ctx.strokeText("Hello",10,50,200);
 		}
+		drawPicture();
 		
+		
+		localStorage.lastName="测试web存储";
+		
+		//使用webwork
+		function startWork(){
+			var w;
+			if(Worker){
+				w = new Worker("js/work.js");	//创建对象
+				w.postMessage("ha");	//传递参数
+				//监听
+				w.onmessage = function (event){
+					document.getElementById("workcontent").innerHTML= event.data;
+				}
+			}else{
+				alert("浏览器不支持web work");
+			}
+		}
+		
+		//使用server-send（暂时无效，待调试）
+		function doGetMsg(){
+			var source=new EventSource("http://localhost/erp/stock/writetoh");
+			source.onerror=function(event){
+				console.log("请求失败...");
+			}
+			source.onmessage=function(event){
+			  document.getElementById("hdiv").innerHTML+=event.data + "<br>";
+			};
+		}
+		
+		//doGetMsg();
 		
 	</script>
-		
-	<style>
-		body {
-			font-family: "微软雅黑";
-		}
-		p.title {
-			font-style: italic;
-		}
-	</style>
-	<body onload="drawPicture()">
+
+	<body onload="inits()">
 		<hr/>
 		<pre>
-		新增表单属性：
+		<p class="title">web存储：以key-value的方式存在</p>
+		localStorage本地存储：永久有效
+		例：存入localStorage.firstName="hejinsheng";读取 localStorage.firstName
+		使用场景，可以作为某些数据的缓存，需要时从localStorage中取值
+		sessionStorage会话存储：只在当前浏览器会话有效，浏览器窗口关闭后删除
+		例：sessionStorage.lastName="zhuziqin"
+		
+		注：使用前判断浏览器是否支持
+		if(typeof(Storage)!=="undefined"){
+		  // Yes! localStorage and sessionStorage support!
+		  // Some code.....
+		 }
+		else{
+		  // Sorry! No web storage support..
+		 }
+		<pre>
+			
+		<hr/>
+		<p class="title">HTML5 Web SQL数据库</p>
+		
+		<hr/>
+		<p class="title">应用程序缓存</p>
+		HTML5 引入了应用程序缓存，这意味着 web 应用可进行缓存，并可在没有因特网连接时进行访问。
+		如需启用应用程序缓存，请在文档的<html> 标签中包含 manifest 属性：
+		&lt;!DOCTYPE HTML&gt;
+		&lt;html manifest="demo.appcache"&gt;
+		...
+		&lt;/html&gt;
+		注：一旦文件被缓存，则浏览器会继续展示已缓存的版本，即使您修改了服务器上的文件。为了确保浏览器更新缓存，需要更新 manifest 文件！。
+		<hr/>
+		<pre>
+		<p class="title">语义化元素：</p>
+		header：		描述了文档的头部区域
+		nav：		导航栏，子元素自动横向排列
+		section：	常用于页眉，页脚等
+		article：	用于独立的（文本）内容
+		aside：		定义页面主区域内容之外的内容（比如侧边栏）
+		footer：		描述了文档的尾部区域
+		figure:		规定独立的流内容（图像、图表、照片、代码等等），如&lt;figure&gt;&lt;img src="" /&gt;&lt;"/figure&gt;
+		
+		以上的元素都是块元素(除了figcaption).
+		为了让这些块及元素在所有版本的浏览器中生效，你需要在样式表文件中设置一下属性 (以下样式代码可以让旧版本浏览器支持本章介绍的块级元素):
+		header, section, footer, aside, nav, article, figure
+		{ 
+			display: block; 
+		}
+		</pre>
+		
+		<hr/>
+		
+		<p class="title">HTML5 服务器发送事件(Server-Sent Events)</p>
+		HTML5 服务器发送事件（server-sent event）允许网页获得来自服务器的更新。（消息推送）
+		<div id="hdiv"></div>
+		<hr/>
+		<p class="title">Web work使用</p>
+		web worker 是运行在后台的 JavaScript，不会影响页面的性能。
+		调用后返回的内容：<br/>
+		<textarea id="workcontent" style="background-color: burlywood;width: 500px;height: 300px;"></textarea>
+		<input type="button" value="开始调用worker" onclick="startWork()" />
+		
+		<hr/>
+		<p class="title">新增的元素</p>
+		<pre>
+			&lt;article&gt;	定义页面独立的内容区域。
+			&lt;aside&gt;	定义页面的侧边栏内容。
+			&lt;bdi&gt;	允许您设置一段文本，使其脱离其父元素的文本方向设置。
+			&lt;command&gt;	定义命令按钮，比如单选按钮、复选框或按钮
+			&lt;details&gt;	用于描述文档或文档某个部分的细节
+			&lt;dialog&gt;	定义对话框，比如提示框
+			&lt;summary&gt;	标签包含 details 元素的标题
+			&lt;figure&gt;	规定独立的流内容（图像、图表、照片、代码等等）。
+			&lt;figcaption&gt;	定义 &lt;figure&gt; 元素的标题
+			&lt;footer&gt;	定义 section 或 document 的页脚。
+			&lt;header&gt;	定义了文档的头部区域
+			&lt;mark&gt;	定义带有记号的文本。
+			&lt;meter&gt;	定义度量衡。仅用于已知最大和最小值的度量。
+			&lt;nav&gt;	定义运行中的进度（进程）。
+			&lt;progress&gt;	定义任何类型的任务的进度。
+			&lt;ruby&gt;	定义 ruby 注释（中文注音或字符）。
+			&lt;rt&gt;	定义字符（中文注音或字符）的解释或发音。
+			&lt;rp&gt;	在 ruby 注释中使用，定义不支持 ruby 元素的浏览器所显示的内容。
+			&lt;section&gt;	定义文档中的节（section、区段）。
+			&lt;time&gt;	定义日期或时间。
+			&lt;wbr&gt;	规定在文本中的何处适合添加换行符。
+		</pre>
+		<hr/>
+		<pre>
+		<p class="title">新增的表单属性：</p>
 		autocomplete : 是否打开表单或输入框的自动完成功能
 		noavalidate : 设置form表单提交时不校验
 		autofocus : 设置&lt;input&gt;标签自动聚焦  autofocus="true"
@@ -120,7 +252,7 @@
 		
 		<hr/>
 		<p class="title">元素拖拽</p>
-		<p id="bedrag" draggable="true" ondragstart="startDrag(event)" style="background-color: lightcoral;">等待被拖动的元素</p>
+		<p id="bedrag" draggable="true" ondragstart="startDrag(event)" style="background-color: lightcoral; width: 200px;">等待被拖动的元素</p>
 		<div id="container" ondrop="dropDown(event)" ondragover="dragOver(event)"  style="width:300px;height: 100px;background-color: #eaeaea;display: block;"></div>
 		<div id="container2" ondrop="dropDown(event)" ondragover="dragOver(event)"  style="width:300px;height: 100px;background-color: greenyellow;"></div>
 		
